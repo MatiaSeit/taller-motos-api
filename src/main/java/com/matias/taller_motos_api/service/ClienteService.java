@@ -13,4 +13,13 @@ public class ClienteService {
                 new Cliente(2L, "Juan", "600456456", "juan@mail.com")
         );
     }
+
+    public Cliente buscarPorId(Long id) {
+        for (Cliente cliente : listar()) {
+            if (cliente.getId().equals(id)) {
+                return cliente;
+        }
+        }
+        return null;
+    }
 }
