@@ -2,6 +2,7 @@ package com.matias.taller_motos_api.controller;
 
 import com.matias.taller_motos_api.model.Cliente;
 import com.matias.taller_motos_api.service.ClienteService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,12 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public Cliente buscarPorId(@PathVariable Long id) {
-        return clienteService.buscarPorId(id);
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
+
+        Cliente cliente = clienteService.buscarPorId(id);
+        if (cliente == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(cliente);
     }
 }
