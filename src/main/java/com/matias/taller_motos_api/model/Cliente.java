@@ -3,12 +3,14 @@ package com.matias.taller_motos_api.model;
 public class Cliente {
     private Long id;
     private String nombre;
+    private String apellido;
     private String telefono;
     private String email;
 
-    public Cliente(Long id, String nombre, String telefono, String email) {
+    public Cliente(Long id, String nombre, String apellido, String telefono, String email) {
         this.id = id;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.telefono = telefono;
         this.email = email;
     }
@@ -27,6 +29,14 @@ public class Cliente {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public String getTelefono() {
