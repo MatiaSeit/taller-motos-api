@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taller de Motos</title>
+<style>
+  :root {
+    --fondo: #1c201b;
+    --panel: #2a3127;
+    --borde: #3d4738;
+    --verde: #5f6f3c;
+    --verde-claro: #8a9a5b;
+    --rojo: #8e2f27;
+    --mostaza: #c9a227;
+    --texto: #e9e4d4;
+    --gris: #9aa092;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--fondo); color: var(--texto);
+    font-family: "Segoe UI", system-ui, sans-serif; line-height: 1.5;
+  }
+  header {
+    background: var(--verde); border-bottom: 6px solid var(--rojo);
+    padding: 20px 24px;
+  }
+  header h1 { margin: 0; font-size: 26px; letter-spacing: 1px; }
+  header p { margin: 4px 0 0; color: #f2edd8; opacity: .85; }
+  main {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    padding: 24px; max-width: 1200px; margin: 0 auto;
+  }
+  @media (max-width: 860px) { main { grid-template-columns: 1fr; } }
+  section {
+    background: var(--panel); border: 1px solid var(--borde);
+    border-top: 4px solid var(--mostaza); border-radius: 8px; padding: 18px;
+  }
+  h2 { margin: 0 0 4px; font-size: 18px; color: var(--mostaza); }
+  .ayuda { margin: 0 0 14px; color: var(--gris); font-size: 14px; }
+  label { display: block; font-size: 13px; color: var(--gris); margin-top: 10px; }
+  input {
+    width: 100%; padding: 9px 10px; margin-top: 4px; border-radius: 6px;
+    border: 1px solid var(--borde); background: var(--fondo); color: var(--texto); font-size: 15px;
+  }
+  input:focus { outline: 2px solid var(--mostaza); border-color: transparent; }
+  button {
+    margin-top: 14px; padding: 10px 16px; border: 0; border-radius: 6px;
+    background: var(--rojo); color: #fff; font-weight: 600; font-size: 15px; cursor: pointer;
+  }
+  button:hover { filter: brightness(1.15); }
+  button.secundario { background: var(--verde); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; color: var(--mostaza); border-bottom: 2px solid var(--borde); padding: 6px; }
+  td { border-bottom: 1px solid var(--borde); padding: 6px; }
+  .fila { display: flex; gap: 8px; align-items: flex-end; }
+  .fila input { flex: 1; }
+  .fila button { margin-top: 0; }
+  #ficha { margin-top: 12px; color: var(--gris); }
+  #viaje { grid-column: 1 / -1; border-top-color: var(--rojo); }
+  .peticion {
+    font-family: Consolas, monospace; font-size: 14px;
+    background: var(--fondo); border: 1px solid var(--borde); border-radius: 6px;
+    padding: 12px; margin-bottom: 10px; white-space: pre-wrap; word-break: break-word;
+  }
+  .metodo { font-weight: 700; }
+  .GET { color: var(--verde-claro); }
+  .POST { color: var(--mostaza); }
+  .estado { display: inline-block; padding: 1px 8px; border-radius: 10px; font-weight: 700; }
+  .ok { background: var(--verde); }
+  .error { background: var(--rojo); }
+  .flecha { color: var(--gris); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Taller de Motos</h1>
+  <p>Panel de recepción — este es el FRONTEND. Cada botón hace una petición a tu BACKEND.</p>
+</header>
+
+<main>
+  <section>
+    <h2>Dar de alta un cliente</h2>
+    <p class="ayuda">Al pulsar «Guardar», esta página envía <b>POST /clientes</b>, igual que hacías con Bruno.</p>
+    <form id="formAlta">
+      <label>Nombre <input name="nombre" required></label>
+      <label>Apellido <input name="apellido" required></label>
+      <label>Teléfono <input name="telefono" required></label>
+      <label>Email <input name="email" type="email" required></label>
+      <button type="submit">Guardar cliente</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Clientes del taller</h2>
+    <p class="ayuda">Esta lista se pide con <b>GET /clientes</b>.</p>
+    <table>
+      <thead><tr><th>Id</th><th>Nombre</th><th>Apellido</th><th>Teléfono</th><th>Email</th></tr></thead>
+      <tbody id="lista"></tbody>
+    </table>
+    <button class="secundario" onclick="cargarClientes()">Recargar lista</button>
+
+    <h2 style="margin-top:22px">Buscar por id</h2>
+    <p class="ayuda">Usa <b>GET /clientes/{id}</b>. Prueba con un id que no exista.</p>
+    <div class="fila">
+      <input id="idBuscar" type="number" min="1" placeholder="Ej.: 1">
+      <button class="secundario" onclick="buscar()">Buscar</button>
+    </div>
+    <div id="ficha"></div>
+  </section>
+
+  <section id="viaje">
+    <h2>El viaje de la petición</h2>
+    <p class="ayuda">Aquí ves lo que viaja entre el frontend y tu backend: lo mismo que te enseñaba Bruno.</p>
+    <div id="registro"><p class="ayuda">Todavía no se ha hecho ninguna petición.</p></div>
+  </section>
+</main>
+
+<script>
+  async function peticion(metodo, ruta, datos) {
+    const opciones = { method: metodo, headers: {} };
+    if (datos) {
+      opciones.headers["Content-Type"] = "application/json";
+      opciones.body = JSON.stringify(datos);
+    }
+    let estado, cuerpo;
+    try {
+      const respuesta = await fetch(ruta, opciones);
+      estado = respuesta.status;
+      const texto = await respuesta.text();
+      cuerpo = texto ? JSON.parse(texto) : null;
+    } catch (e) {
+      estado = "sin respuesta";
+      cuerpo = "¿Está arrancado el servidor?";
+    }
+    apuntar(metodo, ruta, datos, estado, cuerpo);
+    return { estado, cuerpo };
+  }
+
+  function apuntar(metodo, ruta, datos, estado, cuerpo) {
+    const registro = document.getElementById("registro");
+    if (registro.querySelector("p")) registro.innerHTML = "";
+    const ok = typeof estado === "number" && estado < 300;
+    const caja = document.createElement("div");
+    caja.className = "peticion";
+    caja.innerHTML =
+      '<span class="metodo ' + metodo + '">' + metodo + "</span> " + ruta +
+      (datos ? "\nEnvía: " + JSON.stringify(datos) : "") +
+      '\n<span class="flecha">↓ respuesta</span>\n' +
+      '<span class="estado ' + (ok ? "ok" : "error") + '">' + estado + "</span> " +
+      (cuerpo === null ? "(vacía)" : JSON.stringify(cuerpo));
+    registro.prepend(caja);
+  }
+
+  async function cargarClientes() {
+    const { cuerpo } = await peticion("GET", "/clientes");
+    const lista = document.getElementById("lista");
+    lista.innerHTML = "";
+    if (!Array.isArray(cuerpo)) return;
+    for (const c of cuerpo) {
+      const fila = document.createElement("tr");
+      for (const valor of [c.id, c.nombre, c.apellido, c.telefono, c.email]) {
+        const celda = document.createElement("td");
+        celda.textContent = valor ?? "";
+        fila.appendChild(celda);
+      }
+      lista.appendChild(fila);
+    }
+  }
+
+  async function buscar() {
+    const id = document.getElementById("idBuscar").value;
+    if (!id) return;
+    const { estado, cuerpo } = await peticion("GET", "/clientes/" + id);
+    const ficha = document.getElementById("ficha");
+    ficha.textContent = estado === 200
+      ? "Encontrado: " + cuerpo.nombre + " " + cuerpo.apellido + " · " + cuerpo.telefono
+      : estado === 404 ? "No existe ningún cliente con el id " + id + " (404)." : "Algo ha fallado.";
+  }
+
+  document.getElementById("formAlta").addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+    const datos = Object.fromEntries(new FormData(evento.target));
+    const { estado } = await peticion("POST", "/clientes", datos);
+    if (estado === 201) {
+      evento.target.reset();
+      cargarClientes();
+    }
+  });
+
+  cargarClientes();
+</script>
+</body>
+</html>
