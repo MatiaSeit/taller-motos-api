@@ -26,4 +26,8 @@ public class MotoService {
             return null;
         }
 
+    public Moto crear(Moto moto) {
+        motos.add(moto);
+        return moto;
+    }
 }
