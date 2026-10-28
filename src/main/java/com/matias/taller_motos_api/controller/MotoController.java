@@ -2,11 +2,9 @@ package com.matias.taller_motos_api.controller;
 
 import com.matias.taller_motos_api.model.Moto;
 import com.matias.taller_motos_api.service.MotoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +30,11 @@ public class MotoController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(moto);
+    }
+
+    @PostMapping
+    public ResponseEntity<Moto> crear(@RequestBody Moto moto) {
+        Moto motoCreada = motoService.crear(moto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(motoCreada);
     }
 }
