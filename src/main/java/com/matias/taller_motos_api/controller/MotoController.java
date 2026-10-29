@@ -35,6 +35,9 @@ public class MotoController {
     @PostMapping
     public ResponseEntity<Moto> crear(@RequestBody Moto moto) {
         Moto motoCreada = motoService.crear(moto);
+        if (motoCreada == null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(motoCreada);
     }
 }

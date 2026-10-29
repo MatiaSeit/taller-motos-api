@@ -27,6 +27,9 @@ public class MotoService {
         }
 
     public Moto crear(Moto moto) {
+        if (buscarPorMatricula(moto.getMatricula()) != null) {
+            return null;
+        }
         motos.add(moto);
         return moto;
     }
