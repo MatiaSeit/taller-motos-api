@@ -10,7 +10,7 @@ http:
     type: json
     data: |-
       {
-        "matricula": "GHI789",
+        "matricula": "ABC123",
         "marca": "Kawasaki",
         "modelo": "Z650",
         "anio": 2022,

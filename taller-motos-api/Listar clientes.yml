@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:8080/motos/ABC123
+  url: http://localhost:8080/clientes
   auth: inherit
 
 settings:
