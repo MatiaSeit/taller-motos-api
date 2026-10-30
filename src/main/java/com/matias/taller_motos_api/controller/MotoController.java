@@ -40,4 +40,13 @@ public class MotoController {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(motoCreada);
     }
+
+    @DeleteMapping("/{matricula}")
+    public ResponseEntity<Void> borrar(@PathVariable String matricula) {
+        if (!motoService.borrar(matricula)) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
+    }
+
 }
