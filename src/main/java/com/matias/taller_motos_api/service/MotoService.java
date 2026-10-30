@@ -33,4 +33,13 @@ public class MotoService {
         motos.add(moto);
         return moto;
     }
+
+    public boolean borrar(String matricula){
+        Moto moto = buscarPorMatricula(matricula);
+        if (moto == null) {
+            return false;
+        }
+        motos.remove(moto);
+        return true;
+    }
 }
