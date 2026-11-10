@@ -2,6 +2,23 @@ opencollection: 1.0.0
 
 info:
   name: taller-motos-api
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+
+request:
+  auth:
+    type: basic
+    username: user
+    password: 30a318bc-9186-45f4-b3bf-ec60d2054c83
 bundled: false
 extensions:
   bruno:
