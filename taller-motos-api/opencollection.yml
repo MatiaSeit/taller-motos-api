@@ -18,7 +18,7 @@ request:
   auth:
     type: basic
     username: user
-    password: 30a318bc-9186-45f4-b3bf-ec60d2054c83
+    password: ""
 bundled: false
 extensions:
   bruno:
