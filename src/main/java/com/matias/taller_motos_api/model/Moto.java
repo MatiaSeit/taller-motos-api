@@ -1,15 +1,20 @@
 package com.matias.taller_motos_api.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
 public class Moto {
+    @Id
     private String matricula;
     private String marca;
     private String modelo;
     private int anio;
     private int cilindrada;
     private String color;
+
+    public Moto() {
+    }
 
     public Moto(String matricula, String marca, String modelo, int anio, int cilindrada, String color) {
         this.matricula = matricula;
