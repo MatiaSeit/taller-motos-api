@@ -1,5 +1,8 @@
 package com.matias.taller_motos_api.model;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Moto {
     private String matricula;
     private String marca;
