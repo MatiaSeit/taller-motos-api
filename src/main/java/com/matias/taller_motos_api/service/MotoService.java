@@ -1,37 +1,32 @@
 package com.matias.taller_motos_api.service;
 
 import com.matias.taller_motos_api.model.Moto;
+import com.matias.taller_motos_api.repository.MotoRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MotoService {
-    private final List<Moto> motos = new ArrayList<>(List.of(
-            new Moto("ABC123", "Honda", "CBR500R", 2020, 500, "Rojo"),
-            new Moto("DEF456", "Yamaha", "MT-07", 2021, 689, "Negro")
-    ));
+    private final MotoRepository motoRepository;
+
+    public MotoService(MotoRepository motoRepository) {
+        this.motoRepository = motoRepository;
+    }
 
     public List<Moto> listar() {
-        return motos;
+        return motoRepository.findAll();
     }
 
     public Moto buscarPorMatricula(String matricula) {
-        for (Moto moto : listar()) {
-            if (moto.getMatricula().equals(matricula)) {
-                return moto;
-            }
-        }
-            return null;
+        return motoRepository.findById(matricula).orElse(null);
         }
 
     public Moto crear(Moto moto) {
         if (buscarPorMatricula(moto.getMatricula()) != null) {
             return null;
         }
-        motos.add(moto);
-        return moto;
+        return motoRepository.save(moto);
     }
 
     public boolean borrar(String matricula){
@@ -39,7 +34,7 @@ public class MotoService {
         if (moto == null) {
             return false;
         }
-        motos.remove(moto);
+        motoRepository.delete(moto);
         return true;
     }
 }

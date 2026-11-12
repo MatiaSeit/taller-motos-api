@@ -11,13 +11,16 @@ http:
     data: |-
       {
         "matricula": "ABC123",
-        "marca": "Kawasaki",
-        "modelo": "Z650",
-        "anio": 2022,
-        "cilindrada": 649,
-        "color": "Verde"
+        "marca": "Honda",
+        "modelo": "CBR500R",
+        "anio": 2020,
+        "cilindrada": 500,
+        "color": "Rojo"
       }
-  auth: inherit
+  auth:
+    type: basic
+    username: user
+    password: ""
 
 settings:
   encodeUrl: true
