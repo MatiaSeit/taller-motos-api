@@ -6,7 +6,10 @@ info:
 http:
   method: GET
   url: http://localhost:8080/motos
-  auth: inherit
+  auth:
+    type: basic
+    username: user
+    password: ""
 
 settings:
   encodeUrl: true
