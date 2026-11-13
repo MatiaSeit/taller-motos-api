@@ -22,6 +22,10 @@ public class MotoService {
         return motoRepository.findById(matricula).orElse(null);
         }
 
+    public List<Moto> buscarPorMarca(String marca) {
+        return motoRepository.findByMarca(marca);
+    }
+
     public Moto crear(Moto moto) {
         if (buscarPorMatricula(moto.getMatricula()) != null) {
             return null;

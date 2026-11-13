@@ -19,8 +19,11 @@ public class MotoController {
     }
 
     @GetMapping
-    public List<Moto> listar() {
-        return motoService.listar();
+    public List<Moto> listar(@RequestParam(required = false) String marca) {
+        if (marca == null) {
+            return motoService.listar();
+        }
+        return motoService.buscarPorMarca(marca);
     }
 
     @GetMapping("/{matricula}")
