@@ -10,7 +10,7 @@ http:
     type: json
     data: |-
       {
-        "matricula": "ABC123",
+        "matricula": "0112MIV",
         "marca": "Honda",
         "modelo": "CBR500R",
         "anio": 2020,

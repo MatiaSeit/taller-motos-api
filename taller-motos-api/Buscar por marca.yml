@@ -12,7 +12,7 @@ http:
       type: query
   auth:
     type: basic
-    password: 1e1a20dc-b633-45cc-a77e-71a2451e6064
+    password:
 
 settings:
   encodeUrl: true
