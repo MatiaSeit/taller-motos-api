@@ -12,7 +12,8 @@ http:
       type: query
   auth:
     type: basic
-    password:
+    username: user
+    password: "{{password}}"
 
 settings:
   encodeUrl: true
