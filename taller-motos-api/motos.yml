@@ -20,7 +20,7 @@ http:
   auth:
     type: basic
     username: user
-    password: ""
+    password: "{{password}}"
 
 settings:
   encodeUrl: true
