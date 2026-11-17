@@ -1,6 +1,11 @@
 package com.matias.taller_motos_api.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Cliente {
+    @Id
     private Long id;
     private String nombre;
     private String apellido;
