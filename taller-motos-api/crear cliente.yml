@@ -1,0 +1,28 @@
+info:
+  name: crear cliente
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: http://localhost:8080/clientes
+  body:
+    type: json
+    data: |-
+      {
+      "nombre": "Laura",
+      "apellido": "Perez",
+      "telefono": "600123123",
+      "email": "laura@mail.com"
+      }
+  auth:
+    type: basic
+    username: user
+    password: "{{password}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
