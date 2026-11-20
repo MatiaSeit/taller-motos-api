@@ -52,4 +52,13 @@ public class MotoController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{matricula}")
+    public ResponseEntity<Moto> actualizar(@PathVariable String matricula, @RequestBody Moto moto) {
+        Moto actualizada = motoService.actualizar(matricula, moto);
+        if (actualizada == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(actualizada);
+    }
+
 }
