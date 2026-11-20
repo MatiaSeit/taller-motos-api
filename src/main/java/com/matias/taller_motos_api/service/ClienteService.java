@@ -24,6 +24,15 @@ public class ClienteService {
         return clienteRepository.findById(id).orElse(null);
     }
 
+    public boolean borrar(Long id) {
+        Cliente cliente = buscarPorId(id);
+        if (cliente == null) {
+            return false;
+        }
+        clienteRepository.delete(cliente);
+        return true;
+    }
+
     public Cliente crear(Cliente cliente) {
         return clienteRepository.save(cliente);
     }
