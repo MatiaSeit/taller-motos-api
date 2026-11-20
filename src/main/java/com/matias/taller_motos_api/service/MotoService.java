@@ -41,4 +41,12 @@ public class MotoService {
         motoRepository.delete(moto);
         return true;
     }
+
+    public Moto actualizar(String matricula, Moto moto) {
+        if (buscarPorMatricula(matricula) == null) {
+            return null;
+        }
+        moto.setMatricula(matricula);
+        return motoRepository.save(moto);
+    }
 }
