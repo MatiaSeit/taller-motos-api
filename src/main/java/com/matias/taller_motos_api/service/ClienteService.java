@@ -36,4 +36,12 @@ public class ClienteService {
     public Cliente crear(Cliente cliente) {
         return clienteRepository.save(cliente);
     }
+
+    public Cliente actualizar(Long id, Cliente cliente) {
+        if (buscarPorId(id) == null) {
+            return null;
+        }
+        cliente.setId(id);
+        return clienteRepository.save(cliente);
+    }
 }

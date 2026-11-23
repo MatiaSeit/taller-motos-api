@@ -1,0 +1,28 @@
+info:
+  name: Actualizar cliente
+  type: http
+  seq: 9
+
+http:
+  method: PUT
+  url: http://localhost:8080/clientes/1
+  body:
+    type: json
+    data: |-
+      {
+        "nombre": "Laura",
+        "apellido": "Perez",
+        "telefono": "699999999",
+        "email": "laura@mail.com"
+      }
+  auth:
+    type: basic
+    username: user
+    password: "{{password}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
