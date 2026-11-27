@@ -3,6 +3,7 @@
 API REST para gestionar un taller de motos: clientes y motos.
 
 ## Tecnologías
+
 - Java y Spring Boot
 - Spring Data JPA con MySQL
 - Spring Security (Basic Auth)
@@ -10,10 +11,11 @@ API REST para gestionar un taller de motos: clientes y motos.
 - Bruno para probar la API
 
 ## Endpoints de motos
+
 | Método | Ruta | Qué hace | Respuesta |
-| --- | --- | --- | --- |
+|---|---|---|---|
 | GET | /motos | Lista todas las motos | 200 |
-| GET | /motos?marca={marca} | Filtra motos por marca | 200 (lista vacía si no hay) |
+| GET | /motos?marca=Honda | Filtra motos por marca | 200 |
 | GET | /motos/{matricula} | Busca una moto | 200 o 404 |
 | POST | /motos | Crea una moto | 201 o 409 si la matrícula ya existe |
 | PUT | /motos/{matricula} | Actualiza una moto | 200 o 404 |
@@ -22,17 +24,20 @@ API REST para gestionar un taller de motos: clientes y motos.
 ## Endpoints de clientes
 
 | Método | Ruta | Qué hace | Respuesta |
-| --- | --- | --- | --- |
+|---|---|---|---|
 | GET | /clientes | Lista todos los clientes | 200 |
 | GET | /clientes/{id} | Busca un cliente | 200 o 404 |
 | POST | /clientes | Crea un cliente (el id lo genera MySQL) | 201 |
+| PUT | /clientes/{id} | Actualiza un cliente | 200 o 404 |
+| DELETE | /clientes/{id} | Borra un cliente | 204 o 404 |
 
 ## Cómo arrancarla
-1. Levantar MySQL con Docker:
-   docker run --name taller-mysql -e MYSQL_ROOT_PASSWORD=tu_password -e MYSQL_DATABASE=taller_motos -p 3307:3306 -d mysql:8
-2. Definir la variable de entorno DB_PASSWORD con esa contraseña.
+
+1. Levantar MySQL con Docker: `docker run --name taller-mysql -e MYSQL_ROOT_PASSWORD=tu_password -e MYSQL_DATABASE=taller_motos -p 3307:3306 -d mysql:8`
+2. Definir la variable de entorno `DB_PASSWORD` con esa contraseña.
 3. Arrancar la aplicación desde IntelliJ.
-4. Las peticiones necesitan Basic Auth con el usuario user y la contraseña que aparece en la consola al arrancar.
+4. Las peticiones necesitan Basic Auth con el usuario `user` y la contraseña que aparece en la consola al arrancar.
 
 ## Organización
+
 Controller, service, repository y model, separados por capas.
